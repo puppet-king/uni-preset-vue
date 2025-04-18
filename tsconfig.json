@@ -1,0 +1,16 @@
+{
+//  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "allowJs": true,
+    "lib": ["esnext", "dom"],
+    "typeRoots": ["./node_modules/@types", "./types",  "./node_modules/miniprogram-api-typings", "@dcloudio/types"],
+//    "types": ["@dcloudio/types"],
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+    "allowSyntheticDefaultImports": true
+  },
+}
