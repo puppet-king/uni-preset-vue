@@ -82,5 +82,10 @@
     "vue-tsc": "^1.0.24",
     "weapp-tailwindcss": "^4.1.0",
     "miniprogram-api-typings": "^4.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog-zh-cn"
+    }
   }
 }

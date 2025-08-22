@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import { ScopeType, ValidScopeKeys } from "@/types/authorization"
+import { ScopeType, ValidScopeKeys } from "@/typeings/authorization"
 
 export const useAuthorizationStore = defineStore("authorization", () => {
   const scope: ScopeType = {

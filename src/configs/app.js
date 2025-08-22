@@ -1,7 +1,7 @@
 const config = {
   HTTP_REQUEST_URL: process.env.NODE_ENV === "production"
-    ? "https://brain-service.juqingsong.cn:9999"
-    : "http://localhost:9090",
+    ? ""
+    : "",
   // HTTP_REQUEST_URL: '',
 
   SYSTEM_VERSION: "0.1.0",

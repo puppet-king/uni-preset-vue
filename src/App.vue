@@ -63,11 +63,10 @@ const checkLoginStatus = () => {
 
 </script>
 <style lang="scss">
-@import "tailwindcss/base";
-@import "tailwindcss/utilities";
-@import "tailwindcss/components";
-
-@import '@/style/index.scss';
+@use "tailwindcss/base";
+@use "tailwindcss/utilities";
+@use "tailwindcss/components";
+@use '@/style/index.scss';
 
 /*  #ifdef  H5  */
 svg {
@@ -79,6 +78,10 @@ svg {
 @layer components {
   .page {
     @apply flex flex-col h-screen w-screen bg-gray-100 dark:bg-black dark:text-white text-black
+  }
+
+  .flex-container {
+    @apply flex flex-col h-screen w-screen relative
   }
 }
 </style>

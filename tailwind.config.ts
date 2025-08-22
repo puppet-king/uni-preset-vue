@@ -4,7 +4,7 @@ import cssMacro from "weapp-tailwindcss/css-macro"
 import { isMp } from "./platform"
 
 export default <Config>{
-  content: ["./error.html", "./src/**/*.{html,js,ts,jsx,tsx,vue}"],
+  content: ["./index.html", "./src/**/*.{html,js,ts,jsx,tsx,vue}"],
   theme: {
     extend: {
       // colors: {
@@ -18,6 +18,10 @@ export default <Config>{
       //   'dark-2': 'var(--color-primary-dark-2, rgb(0, 135, 204))',
       // },
       // },
+
+      padding: {
+        'safe-bottom': 'env(safe-area-inset-bottom)', // 添加一个自定义类
+      },
     },
   },
   // https://weapp-tw.icebreaker.top/docs/quick-start/uni-app-css-macro

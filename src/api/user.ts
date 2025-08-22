@@ -1,45 +1,13 @@
 import service from "@/utils/request"
-import {UserDataApiResponse} from "@/types/base"
+import {UserDataApiResponse} from "@/typeings/base"
+import {DemoResponse} from "@/typeings/authorization";
 
 const baseDir = "/v1/user"
 
-export function wxAuth(data) {
-  return service.request({
-    url: `${baseDir}/wx-auth`,
-    method: "post",
-    data
-  }, {
-    noAuth: true,
-    retry: false
-  })
-}
-
-
-export function r(data) {
-  return service.request({
-    url: `${baseDir}/r`,
-    method: "post",
-    data
-  }, {
-    noAuth: true,
-    retry: false
-  })
-}
-
-
-export function update(data: { nick?: string, birth?: number}) {
+export function fetchDemo() :Promise<DemoResponse> {
   return service.request({
     url: `${baseDir}`,
-    method: "post",
-    data
-  })
+    method: 'get',
+  }) as Promise<DemoResponse>
 }
-
-export function getUserData(): Promise<UserDataApiResponse> {
-  return service.request({
-    url: `${baseDir}`,
-    method: "get",
-  }) as Promise<UserDataApiResponse>
-}
-
 
