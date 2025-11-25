@@ -1,7 +1,7 @@
 <template>
-  <view class="w-full box-border z-50" :class="[themeStyle, splitLine ? 'line' : '']">
+  <view class="w-full box-border z-50 " :class="[themeStyle, splitLine ? 'line' : '']">
     <view v-if="statusBar" class="w-full box-border" :style="{ height: statusBarHeight+'px' }" />
-    <view class="w-screen relative flex flex-row items-center  justify-center font-medium truncate" style="height: 44px" :style="{fontSize}">
+    <view class="w-screen relative flex flex-row items-center  justify-center font-medium truncate" style="height: 88rpx" :style="{fontSize}">
       <view :class="'flex absolute w-[240rpx] left-2 items-center z-50'">
         <slot>
           <ui-icon
@@ -38,16 +38,16 @@
 </template>
 
 <script>
-import config from "@/configs/app"
-import UiIcon from "@/components/ui-icon/ui-icon.vue"
+import config from '@/configs/app'
+import UiIcon from '@/components/UiIcon/UiIcon.vue'
 
 export default {
-  name: "NavBar",
-  components: { UiIcon },
+  name: 'NavBar',
+  components: {UiIcon },
   props: {
     title: {
       type: String,
-      default: ""
+      default: ''
     },
     //是否需要底部分割线
     splitLine: {
@@ -56,15 +56,15 @@ export default {
     },
     fontSize: {
       type: String,
-      default: "34rpx"
+      default: '34rpx'
     },
     iconColorClass: {
       type: String,
-      default: "text-neutral-400 dark:text-white"
+      default: 'text-neutral-400 dark:text-white'
     },
     iconSize: {
       type: String,
-      default: "46rpx"
+      default: '46rpx'
     },
     leftClickFun: {
       type: Function,
@@ -72,7 +72,7 @@ export default {
     },
     theme: {
       type: String,
-      default: "default" // 主题有默认、gray
+      default: 'default' // 主题有默认、gray
     },
     //是否包含状态栏
     statusBar: {
@@ -93,12 +93,12 @@ export default {
   computed: {
     themeStyle() {
       switch (this.theme) {
-        case "gray":
-          return "bg-gray-100 text-black dark:text-white dark:bg-black "
-        case "transparent":
-          return ""
+        case 'gray':
+          return 'bg-gray-100 text-black dark:text-white dark:bg-black '
+        case 'transparent':
+          return ''
         default:
-          return "bg-white dark:bg-black text-black dark:text-white"
+          return 'bg-white dark:bg-black text-black dark:text-white'
       }
     }
   },
@@ -108,12 +108,12 @@ export default {
   },
   methods: {
     setNavigationBarColor() {
-      if (this.theme === "transparent") {
-        uni.setNavigationBarColor({frontColor: "#ffffff", backgroundColor: "#000000"})
-      } else if(this.systemTheme === "light") {
-        uni.setNavigationBarColor({frontColor: "#000000", backgroundColor: "#ffffff"})
+      if (this.theme === 'transparent') {
+        uni.setNavigationBarColor({frontColor: '#ffffff', backgroundColor: '#000000'})
+      } else if(this.systemTheme === 'light') {
+        uni.setNavigationBarColor({frontColor: '#000000', backgroundColor: '#ffffff'})
       } else {
-        uni.setNavigationBarColor({frontColor: "#ffffff", backgroundColor: "#000000"})
+        uni.setNavigationBarColor({frontColor: '#ffffff', backgroundColor: '#000000'})
       }
     },
     updateNavigationBar() {
@@ -128,7 +128,7 @@ export default {
         return
       }
 
-      const isTabBarPage = config.TabBarStyle.some(tab => tab.pagePath === currentPage.route)
+      const isTabBarPage = config.tabBarStyle.some(tab => tab.pagePath === currentPage.route)
       if (isTabBarPage) return
 
       if (stackLength === 1) {
@@ -138,25 +138,25 @@ export default {
       }
     },
     onGoBack() {
-      console.log("navigateBack")
+      console.log('navigateBack')
 
       uni.navigateBack({
         success: () => {
           wx.disableAlertBeforeUnload()
         },
         fail: (error) => {
-          console.error("navigateBack", error)
-          uni.switchTab({
-            url: "/pages/index/index"
+          console.error('navigateBack', error)
+          uni.reLaunch({
+            url: '/pages/index/index'
           })
         }
       })
     },
     onGoHome() {
       // console.log('onGoHome')
-      wx.vibrateShort({ type: "light" })
-      uni.switchTab({
-        url: "/pages/index/index"
+      void uni.vibrateShort()
+      uni.reLaunch({
+        url: '/pages/index/index'
       })
     }
   }

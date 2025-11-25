@@ -1,6 +1,6 @@
 import service from "@/utils/request"
-import {UserDataApiResponse} from "@/typeings/base"
-import {DemoResponse} from "@/typeings/authorization";
+import {UserDataApiResponse} from "@/typings/base"
+import {DemoResponse} from "@/typings/authorization";
 
 const baseDir = "/v1/user"
 

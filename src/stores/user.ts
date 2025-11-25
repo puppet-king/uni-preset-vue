@@ -1,7 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import { getUserData } from "@/api/user"
-import { AuthData } from "@/typeings/base"
+import { AuthData } from "@/typings/base"
 
 export const useUserStore = defineStore("user", () => {
   const uuid = ref("")
