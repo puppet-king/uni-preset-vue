@@ -86,7 +86,7 @@ pnpm dev:mp-weixin    # 微信小程序开发
 - **Git Clone**: `git clone git@github.com:puppet-king/uni-preset-vue.git`
 
 ## 技术栈
-
+git
 - Vue 3
 - TypeScript
 - Pinia (状态管理)
