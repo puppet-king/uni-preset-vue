@@ -1,12 +1,16 @@
 <template>
-  <view class="w-full box-border z-50 " :class="[themeStyle, splitLine ? 'line' : '']">
-    <view v-if="statusBar" class="w-full box-border" :style="{ height: statusBarHeight+'px' }" />
-    <view class="w-screen relative flex flex-row items-center  justify-center font-medium truncate" style="height: 88rpx" :style="{fontSize}">
-      <view :class="'flex absolute w-[240rpx] left-2 items-center z-50'">
+  <view class="w-full box-border z-50">
+    <view v-if="statusBar" class="w-full box-border" :style="{ height: statusBarHeight + 'px' }" />
+    <view
+      class="w-full relative flex flex-row items-center justify-center font-medium truncate"
+      style="height: 44px"
+      :style="{ fontSize }"
+    >
+      <view class="flex absolute w-28 left-2 items-center z-50">
         <slot>
           <ui-icon
             v-if="showBack"
-            icon="left"
+            icon="arrowLeft"
             :size="iconSize"
             color="custom"
             :custom-color="iconColorClass"
@@ -21,73 +25,67 @@
             :custom-color="iconColorClass"
             @click="onGoHome"
           />
-
-          <ui-icon
-            v-if="showClose"
-            icon="close"
-            :size="iconSize"
-            color="custom"
-            :custom-color="iconColorClass"
-            @tap="onGoBack"
-          />
         </slot>
       </view>
-      {{ title }}
+      <text max-lines="1"> {{ title }}</text>
+      <view class="flex absolute items-center justify-end z-50" :style="{ right: rightMargin + 'px' }">
+        <slot name="right"></slot>
+      </view>
     </view>
   </view>
 </template>
-
 <script>
 import config from '@/configs/app'
 import UiIcon from '@/components/UiIcon/UiIcon.vue'
 
 export default {
   name: 'NavBar',
-  components: {UiIcon },
+  components: { UiIcon },
   props: {
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     //是否需要底部分割线
     splitLine: {
       type: Boolean,
-      default: false
+      default: false,
     },
     fontSize: {
       type: String,
-      default: '34rpx'
+      default: '34rpx',
     },
     iconColorClass: {
       type: String,
-      default: 'text-neutral-400 dark:text-white'
+      default: 'text-neutral-400 dark:text-white',
     },
     iconSize: {
       type: String,
-      default: '46rpx'
+      default: '46rpx',
     },
     leftClickFun: {
       type: Function,
-      default: null
+      default: null,
     },
     theme: {
       type: String,
-      default: 'default' // 主题有默认、gray
+      default: 'default', // 主题有默认、gray
     },
     //是否包含状态栏
     statusBar: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   emits: [],
   data() {
     return {
       statusBarHeight: wx.getWindowInfo().statusBarHeight,
-      systemTheme: wx.getAppBaseInfo().theme,  // light、 dark
+      systemTheme: wx.getAppBaseInfo().theme, // light、 dark
       showBack: false,
       showHome: false,
-      showClose: false
+      showClose: false,
+      rightMargin: 100,
     }
   },
   computed: {
@@ -100,20 +98,24 @@ export default {
         default:
           return 'bg-white dark:bg-black text-black dark:text-white'
       }
-    }
+    },
   },
   created() {
+    const res = wx.getMenuButtonBoundingClientRect()
+    const systemInfo = wx.getWindowInfo()
+    this.rightMargin = systemInfo.screenWidth - res.left + 10
+
     this.updateNavigationBar()
     this.setNavigationBarColor()
   },
   methods: {
     setNavigationBarColor() {
       if (this.theme === 'transparent') {
-        uni.setNavigationBarColor({frontColor: '#ffffff', backgroundColor: '#000000'})
-      } else if(this.systemTheme === 'light') {
-        uni.setNavigationBarColor({frontColor: '#000000', backgroundColor: '#ffffff'})
+        uni.setNavigationBarColor({ frontColor: '#ffffff', backgroundColor: '#000000' })
+      } else if (this.systemTheme === 'light') {
+        uni.setNavigationBarColor({ frontColor: '#000000', backgroundColor: '#ffffff' })
       } else {
-        uni.setNavigationBarColor({frontColor: '#ffffff', backgroundColor: '#000000'})
+        uni.setNavigationBarColor({ frontColor: '#ffffff', backgroundColor: '#000000' })
       }
     },
     updateNavigationBar() {
@@ -128,7 +130,7 @@ export default {
         return
       }
 
-      const isTabBarPage = config.tabBarStyle.some(tab => tab.pagePath === currentPage.route)
+      const isTabBarPage = config.tabBarStyle.some((tab) => tab.pagePath === currentPage.route)
       if (isTabBarPage) return
 
       if (stackLength === 1) {
@@ -147,19 +149,19 @@ export default {
         fail: (error) => {
           console.error('navigateBack', error)
           uni.reLaunch({
-            url: '/pages/index/index'
+            url: '/pages/index/index',
           })
-        }
+        },
       })
     },
     onGoHome() {
       // console.log('onGoHome')
       void uni.vibrateShort()
       uni.reLaunch({
-        url: '/pages/index/index'
+        url: '/pages/index/index',
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -172,7 +174,7 @@ export default {
 .line::after {
   content: '';
   position: absolute;
-  border-bottom: 1px solid #EEEEEE !important;
+  border-bottom: 1px solid #eeeeee !important;
   transform: scaleY(0.5);
   transform-origin: 0 100%;
   bottom: 0;
@@ -180,8 +182,7 @@ export default {
   left: 0;
 }
 
-
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme: dark) {
   .line::after {
     border-bottom: 1px solid #333333 !important;
   }

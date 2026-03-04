@@ -1,20 +1,43 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "lib": ["ES2015", "DOM"], // 确保包含ES2015或更高版本
+    "outDir": "dist",
+    "target": "esnext",
+    "module": "esnext",
+    "strict": false, // 开启所有严格类型检查规则
+    "jsx": "preserve",
+    "esModuleInterop": true, // 解决 ES Modules 和 CommonJS 模块的互操作性问题
+    "sourceMap": true,
+    "skipLibCheck": true, // 跳过对第三方声明文件（.d.ts）的类型检查
+    "importHelpers": true, // 从 tslib 库复用辅助函数
+    "allowSyntheticDefaultImports": true, // 允许「合成默认导入」
+    "useDefineForClassFields": true, // 遵循 ESNext 类字段规范
+    "resolveJsonModule": true, // 允许 TS 直接导入 JSON 文件（如 import config from './config.json'），并自动生成 JSON 的类型提示。
+    "moduleResolution": "node", // 使用 Node.js 的模块解析策略
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "paths": {
       "@/*": ["src/*"]
     },
     "allowJs": true,
-    "typeRoots": ["./node_modules/@types", "./typings",  "./node_modules/miniprogram-api-typings"], // 包含声明文件,
-    //    "types": ["miniprogram-api-typings"],
-    "include": [
-      "src",
-      "async-import.d.ts",
-      "async-component.d.ts",
-      "shims-uni.d.ts",
-      "shims-vue.d.ts"
-    ], // 确保 src 文件夹被 TypeScript 编译器识别
-    "allowSyntheticDefaultImports": true
-  }
+    "types": ["miniprogram-api-typings", "@dcloudio/types", "node"],
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "src/**/*.js",
+    "async-import.d.ts",
+    "async-component.d.ts",
+    "shims-uni.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "unpackage",
+    "src/**/*.nvue",
+    "**/node_modules/*"
+  ]
 }

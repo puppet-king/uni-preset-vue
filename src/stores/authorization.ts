@@ -1,8 +1,7 @@
-import { defineStore } from "pinia"
-import { ScopeType, ValidScopeKeys } from "@/typings/authorization"
+import { defineStore } from 'pinia'
 
-export const useAuthorizationStore = defineStore("authorization", () => {
-  const scope: ScopeType = {
+export const useAuthorizationStore = defineStore('authorization', () => {
+  const scope = {
     userLocation: false, // 精确地理位置
     userFuzzyLocation: false, // 模糊地理位置
     userLocationBackground: false, // 后台定位
@@ -20,12 +19,12 @@ export const useAuthorizationStore = defineStore("authorization", () => {
   }
 
   // 获取授权信息的方法
-  function isAuthorized(key: ValidScopeKeys): boolean {
+  function isAuthorized(key): boolean {
     return scope[key]
   }
 
   // 更新授权信息的方法
-  function updateAuthorizationInfo(key: ValidScopeKeys, newStatus: boolean) {
+  function updateAuthorizationInfo(key, newStatus: boolean) {
     scope[key] = newStatus
   }
 

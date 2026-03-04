@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss"
-// import { getIconCollections, iconsPlugin } from "@egoist/tailwindcss-icons"
 import cssMacro from "weapp-tailwindcss/css-macro"
 import { isMp } from "./platform"
 

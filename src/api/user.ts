@@ -1,13 +1,11 @@
-import service from "@/utils/request"
-import {UserDataApiResponse} from "@/typings/base"
-import {DemoResponse} from "@/typings/authorization";
+import service from '@/utils/request'
+import type { UserDataResponse } from '@/typings/api'
 
-const baseDir = "/v1/user"
+const baseDir = '/v1/user'
 
-export function fetchDemo() :Promise<DemoResponse> {
-  return service.request({
+export function getUserData() {
+  return service.request<UserDataResponse>({
     url: `${baseDir}`,
-    method: 'get',
-  }) as Promise<DemoResponse>
+    method: 'GET',
+  })
 }
-

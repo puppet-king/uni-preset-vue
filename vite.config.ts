@@ -42,14 +42,14 @@ export default defineConfig({
             // mangle: true, // 压缩混淆
         })
     ],
-    build:{
-        // minify: 'esbuild',
-        sourcemap: true,
-        minify: process.env.NODE_ENV === 'production' ? 'esbuild' : false,
+    build: {
+      // minify: 'esbuild',
+      sourcemap: false,
+      minify: process.env.NODE_ENV === 'production' ? 'esbuild' : false,
     },
     esbuild: {
-        // drop: ['console', 'debugger'], // 移除 console 和 debugger
-        drop: process.env.NODE_ENV  === 'production' ? ['console', 'debugger'] : [],
+      // drop: ['console', 'debugger'], // 移除 console 和 debugger
+      drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
     },
     resolve: {
         alias: {

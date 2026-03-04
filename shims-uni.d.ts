@@ -1,5 +1,5 @@
+/// <reference types='@dcloudio/types' />
 import 'vue'
-import '@vue/runtime-core'
 
 declare module 'vue' {
   interface ComponentCustomProperties {
@@ -8,10 +8,9 @@ declare module 'vue' {
 }
 
 declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
+  type Hooks = App.AppInstance & Page.PageInstance
+
+  interface ComponentCustomOptions extends Hooks {
     $scope?: any
   }
 }
-
-
-export {}

@@ -1,20 +1,19 @@
-import { defineStore } from "pinia"
-import { ref } from "vue"
-import { getUserData } from "@/api/user"
-import { AuthData } from "@/typings/base"
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { getUserData } from '@/api/user'
+import { AuthData } from '@/typings/base'
 
-export const useUserStore = defineStore("user", () => {
-  const uuid = ref("")
-  const nick = ref("")
+export const useUserStore = defineStore('user', () => {
+  const uuid = ref('')
+  const nick = ref('')
   const isLoad = ref(false)
 
   const auth = ref<AuthData>({
-    token: "",
+    token: '',
     expires_in: 0,
-    refresh_token: "",
-    refresh_token_expires_in: 0
+    refresh_token: '',
+    refresh_token_expires_in: 0,
   })
-
 
   // 异步设置 AccessToken 和 RefreshToken
   function setAuth(data: AuthData): void {
@@ -25,7 +24,7 @@ export const useUserStore = defineStore("user", () => {
       auth.value.expires_in = data.expires_in
     }
 
-    console.log("setAuth Success ")
+    console.log('setAuth Success ')
   }
 
   function checkTokenExpiresIn(): [string, boolean] {
@@ -33,16 +32,16 @@ export const useUserStore = defineStore("user", () => {
     if (auth.value.expires_in > currentTime) {
       return [auth.value.token, true]
     }
-    return ["", false]
+    return ['', false]
   }
 
   function checkRefreshTokenExpiresIn(): [string, boolean] {
     const currentTime = Math.floor(Date.now() / 1000)
-    console.log("checkRefreshTokenExpiresIn", auth.value.refresh_token_expires_in)
+    console.log('checkRefreshTokenExpiresIn', auth.value.refresh_token_expires_in)
     if (auth.value.refresh_token_expires_in > currentTime) {
       return [auth.value.refresh_token, true]
     }
-    return ["", false]
+    return ['', false]
   }
 
   async function setUserData(force = false) {
@@ -71,8 +70,12 @@ export const useUserStore = defineStore("user", () => {
   }
 
   return {
-    uuid, nick, isLoad,
-    setUserData, setAuth,
-    checkTokenExpiresIn, checkRefreshTokenExpiresIn
+    uuid,
+    nick,
+    isLoad,
+    setUserData,
+    setAuth,
+    checkTokenExpiresIn,
+    checkRefreshTokenExpiresIn,
   }
 })
