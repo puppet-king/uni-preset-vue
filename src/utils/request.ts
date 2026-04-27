@@ -9,6 +9,7 @@ interface RequestOptions<TData = unknown, TParams = unknown> {
   method: UniApp.RequestOptions['method']
   data?: TData
   params?: TParams
+  timeout?: number
   header?: Record<string, string>
 }
 
@@ -73,7 +74,7 @@ async function request<TData = any, TParams = any>(
       url: options.url,
       method: options.method,
       data: options.data,
-      timeout: 60000,
+      timeout: options.timeout ?? 60000,
       enableHttp2: true,
       header: {
         Authorization: token,

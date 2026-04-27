@@ -4,11 +4,12 @@
     "outDir": "dist",
     "target": "esnext",
     "module": "esnext",
+    "skipLibCheck": true, // 跳过所有 node_modules 里的 .d.ts 类型检查
+    "skipDefaultLibCheck": true, // 跳过 TS 内置库类型检查（如 lib.dom.d.ts）
     "strict": false, // 开启所有严格类型检查规则
     "jsx": "preserve",
     "esModuleInterop": true, // 解决 ES Modules 和 CommonJS 模块的互操作性问题
     "sourceMap": true,
-    "skipLibCheck": true, // 跳过对第三方声明文件（.d.ts）的类型检查
     "importHelpers": true, // 从 tslib 库复用辅助函数
     "allowSyntheticDefaultImports": true, // 允许「合成默认导入」
     "useDefineForClassFields": true, // 遵循 ESNext 类字段规范

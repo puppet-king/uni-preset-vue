@@ -37,6 +37,7 @@
 <script>
 import config from '@/configs/app'
 import UiIcon from '@/components/UiIcon/UiIcon.vue'
+import { TabBarStyle } from '@/configs/constant'
 
 export default {
   name: 'NavBar',
@@ -130,7 +131,7 @@ export default {
         return
       }
 
-      const isTabBarPage = config.tabBarStyle.some((tab) => tab.pagePath === currentPage.route)
+      const isTabBarPage = TabBarStyle.some((tab) => tab.pagePath === currentPage.route)
       if (isTabBarPage) return
 
       if (stackLength === 1) {

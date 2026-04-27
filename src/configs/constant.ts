@@ -27,3 +27,7 @@ export const DASHSCOPE_GENERATION_URL =
 export const endMsg = '面试已结束，感谢您的参与！'
 // 是否保存pcm文件，用于本地调试
 export const SAVE_PCM_FILE = false
+
+export const TabBarStyle = []
+
+export const COS_URL = 'cloud://default-0gartw8d61bcb1f3.6465-default-0gartw8d61bcb1f3-1416753677'

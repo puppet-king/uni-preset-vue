@@ -35,7 +35,8 @@
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
     "type-check": "vue-tsc --noEmit",
-    "postinstall": "weapp-tw patch"
+    "postinstall": "weapp-tw patch",
+    "version": "node scripts/sync-version.mjs && git add src/configs/constant.ts && git push origin master"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-4080720251210001",
@@ -55,7 +56,9 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-4080720251210001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4080720251210001",
     "pinia": "^3.0.0",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "spark-md5": "^3.0.2",
+    "base64-arraybuffer": "^1.0.2"
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.28.6",
@@ -82,6 +85,7 @@
     "miniprogram-api-typings": "latest",
     "sass": "^1.80.0",
     "sass-loader": "^10.0.2",
+    "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "tailwindcss-cli": "^0.1.2",
     "typescript": "^5.9.3",

@@ -70,4 +70,34 @@ function base64ToArrayBuffer(base64: string): ArrayBuffer {
   return bytes.buffer
 }
 
-export { formatTime, utctimestamp, sleep, padding2, formatNumber, base64ToArrayBuffer }
+import SparkMD5 from 'spark-md5'
+
+/**
+ * 计算对象的 MD5 哈希值
+ * @param data - 需要计算哈希的对象
+ * @returns MD5 哈希字符串（32位16进制）
+ */
+const calculateHash = (data: unknown): string => {
+  // 将对象转换为字符串
+  const dataString = typeof data === 'string' ? data : JSON.stringify(data)
+  // 使用 spark-md5 计算 MD5
+  return SparkMD5.hash(dataString)
+}
+
+// 获取距离当天结束（次日0点）的秒数
+const getSecondsUntilMidnight = () => {
+  const now = new Date()
+  const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0)
+  return Math.floor((midnight.getTime() - now.getTime()) / 1000)
+}
+
+export {
+  formatTime,
+  utctimestamp,
+  sleep,
+  padding2,
+  formatNumber,
+  base64ToArrayBuffer,
+  calculateHash,
+  getSecondsUntilMidnight,
+}

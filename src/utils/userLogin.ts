@@ -1,4 +1,4 @@
-import { wxAuthApi, rApi } from '@/api/cloudCalller'
+import { wxAuthApi, rApi } from '@/services/cloudCalller'
 import { useUserStore } from '@/stores/user'
 
 let wxLoginPromise: any

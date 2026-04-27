@@ -1,56 +1,54 @@
-import type { Config } from "tailwindcss"
-import cssMacro from "weapp-tailwindcss/css-macro"
-import { isMp } from "./platform"
+import type { Config } from 'tailwindcss'
 
 export default <Config>{
-  content: ["./index.html", "./src/**/*.{html,js,ts,jsx,tsx,vue}"],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      // colors: {
-      // // 你可以在这里进行颜色的扩展
-      // primary: {
-      //   'DEFAULT': 'var(--color-primary, #0089FF)',
-      //   'light-3': 'var(--color-primary-light-3, rgb(85, 199, 255))',
-      //   'light-5': 'var(--color-primary-light-5, rgb(130, 217, 255))',
-      //   'light-7': 'var(--color-primary-light-7, rgb(175, 235, 255))',
-      //   'light-9': 'var(--color-primary-light-9, rgb(219, 252, 255))',
-      //   'dark-2': 'var(--color-primary-dark-2, rgb(0, 135, 204))',
-      // },
-      // },
-
+      fontFamily: {
+        'ping-fang': ['"PingFang SC"', 'sans-serif'],
+      },
+      fontSize: {
+        // 1. 最小辅助字号 (原本的 10px 对应 20rpx)
+        tiny: ['20rpx', { lineHeight: '1.2' }],
+        // 2. 次级说明文字 (原本的 12px 对应 24rpx)
+        sub: ['24rpx', { lineHeight: '1.4' }],
+        // 3. 基础正文
+        base: ['28rpx', { lineHeight: '1.5' }],
+        // 4. 对话/陈述专用的黄金字号
+        chat: ['30rpx', { lineHeight: '1.6' }],
+        // 5. 小标题
+        title: ['32rpx', { lineHeight: '1.4', fontWeight: '600' }],
+      },
+      colors: {
+        primary: '', // 品牌主色：如按钮、高亮状态
+        secondary: '', // 辅助色：用于区分主色的次要元素
+        accent: '', // 强调色：用于点缀、告警或吸引注意的元素
+        dark: '', // 深色文本/背景：通常用于深色模式或高对比度文字
+        light: '', // 浅色文本/背景：通常用于背景底色
+        black: '', // 纯黑或接近黑的文字
+      },
+      boxShadow: {
+        // 建议补充：'card': '0 2rpx 10rpx rgba(0,0,0,0.05)' 等卡片阴影
+      },
       padding: {
-        'safe-bottom': 'env(safe-area-inset-bottom)', // 添加一个自定义类
+        'safe-bottom': 'env(safe-area-inset-bottom)', // 安全下边距
       },
     },
   },
   // https://weapp-tw.icebreaker.top/docs/quick-start/uni-app-css-macro
   plugins: [
-    cssMacro({
-      variantsMap: {
-        "wx": "MP-WEIXIN",
-        "-wx": {
-          value: "MP-WEIXIN",
-          negative: true,
-        },
-        // 定义多个条件判断
-        // mv: {
-        //   value: 'H5 || MP-WEIXIN'
-        // },
-        // '-mv': {
-        //   value: 'H5 || MP-WEIXIN',
-        //   negative: true
-        // }
-      },
-    })
     // iconsPlugin({
-      // 在这里可以选择你要使用的 icon, 更多详见:
-      // https://icon-sets.iconify.design/
-      // collections: getIconCollections(["svg-spinners", "mdi"]),
+    // 在这里可以选择你要使用的 icon, 更多详见:
+    // https://icon-sets.iconify.design/
+    // collections: getIconCollections(["svg-spinners", "mdi"]),
     // }),
   ],
   corePlugins: {
-    // 小程序去使用 h5 的 preflight 和响应式 container 没有意义
-    preflight: !isMp,
-    container: !isMp,
+    preflight: false,
+    container: false,
+    textIndent: false,
+    gridTemplateColumns: false,
+    gridTemplateRows: false,
+    objectFit: false, // 关闭 object-fit
   },
 }

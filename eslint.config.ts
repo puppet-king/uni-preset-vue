@@ -21,6 +21,8 @@ export default defineConfig(
       '**/*.min.js',
       'bin',
       'build',
+      'src/env.d.ts',
+      'src/components/**/fui-*',
     ],
   },
 
@@ -44,6 +46,7 @@ export default defineConfig(
         getCurrentPages: 'readonly',
         WechatMiniprogram: 'readonly',
         UniNamespace: 'readonly',
+        getCurrentInstance: 'readonly',
       },
       // 关键：针对 Vue 文件使用正确的解析器
       parserOptions: {
