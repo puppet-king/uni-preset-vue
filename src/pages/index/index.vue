@@ -8,16 +8,12 @@
       <view class="indexContainer flex flex-col h-screen w-screen text-base relative">
         <!-- 遮罩层  -->
         <view id="overlay"></view>
-        <navBar>
-          <view class="flex flex-row gap-1.5 h-5 items-center" title="主页" @tap="onClickMenu"> </view>
+        <navBar title="主页">
+          <view class="flex flex-row gap-1.5 h-5 items-center" @tap="onClickMenu"> </view>
         </navBar>
 
         <!-- 内容主体 -->
-        <ContentArea
-          ref="contentAreaRef"
-          :clipboard-value="clipboardValue"
-          @show-disclaimer="showDisclaimerDialog = true"
-        ></ContentArea>
+        <ContentArea ref="contentAreaRef"></ContentArea>
       </view>
     </horizontal-drag-gesture-handler>
   </view>
@@ -28,42 +24,10 @@ import { ref, getCurrentInstance } from 'vue'
 import { onShow, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
 import Sidebar from '@/pages/index/components/Sidebar.vue'
 import ContentArea from './components/ContentArea.vue'
-import NavBar from '@/components/nav-bar/nav-bar.vue'
-import { useAgentsStore } from '@/stores/agents'
-import { Throttle } from '@/utils/throttle'
-import { COS_URL } from '@/configs/constant'
-
-// 声明 ContentArea 组件实例类型
-type ContentAreaInstance = {
-  handleSubmit: () => Promise<void>
-}
-
-const agentsStore = useAgentsStore()
-
+import NavBar from '@/components/NavBar/NavBar.vue'
 defineOptions({
-  name: 'ConflictAnalysis',
+  name: 'CustomIndex',
 })
-
-// ContentArea 组件引用
-const contentAreaRef = ref<ContentAreaInstance | null>(null)
-
-// 剪切板值
-const clipboardValue = ref<string>('')
-
-// UI 状态
-const showDisclaimerDialog = ref(false)
-const showPayDialog = ref(false)
-
-// 剪切板内容
-const conflictDescription = ref<string>('')
-const lastConflictDescription = ref('') // 上一次剪切板内容 即实现 若用户不同意的的话 也存储到 剪切板 下次不会提醒
-
-/**
- * 用户同意免责声明后，继续执行提交分析
- */
-const handleAgreed = () => {
-  contentAreaRef.value?.handleSubmit()
-}
 
 // 加载资源
 const shouldLoadSidebar = ref(false)
@@ -75,73 +39,29 @@ const prepareSidebarResources = () => {
   }
 }
 
-// 读取剪贴板内容（已节流，1s 内只执行第一次）
-const readClipboard = Throttle(() => {
-  console.log('readClipboard')
-  wx.getClipboardData({
-    success: (res) => {
-      console.log('getClipboardData', res)
-      const clipboardContent = res.data
-      if (clipboardContent && clipboardContent.trim()) {
-        // 如果输入框内容已经等于剪切板内容，不重复询问
-        if (conflictDescription.value === clipboardContent || lastConflictDescription.value === clipboardContent) {
-          return
-        }
-
-        lastConflictDescription.value = clipboardContent
-        uni.showModal({
-          title: '发现剪切板内容',
-          content: '将内容粘贴到"事实陈述"中？',
-          confirmText: '粘贴',
-          confirmColor: '#ff99c8',
-          cancelText: '取消',
-          success: (modalRes) => {
-            if (modalRes.confirm) {
-              clipboardValue.value = clipboardContent
-              wx.showToast({ title: '已粘贴', icon: 'success' })
-
-              // 会弹出 toast 提示"内容已复制"，持续 1.5s 没有意义,  已经在临时变量记录了 多次 onShow 不会重复覆盖。
-              // wx.setClipboardData({ data: '' })
-            }
-          },
-        })
-      }
-    },
-    fail: (err) => {
-      console.error('读取剪切板失败:', err)
-    },
-  })
-}, 2000)
-
-onShow(() => {
-  readClipboard()
-})
+onShow(() => {})
 
 onShareAppMessage(() => {
   return {
-    title: '公平审理',
-    path: `/pages/index/index?utm_source=ShareAppMessage`,
+    title: '',
+    path: ``,
     promise: handleShareAppMessage('ShareAppMessage'),
   }
 })
 
 onShareTimeline(() => {
   return {
-    title: '谁在“作”，猫知道。',
+    title: '',
     path: `/pages/index/index?utm_source=ShareTimeline`,
     promise: handleShareAppMessage('ShareTimeline'),
   }
 })
 
 const handleShareAppMessage = async (utmSource: string) => {
-  const { name, desc, icon } = agentsStore.activeJudge
-  const url = `${COS_URL}${icon}`
-  const shareTitle = `${desc}`
-
   return {
-    title: shareTitle,
+    title: '',
     path: `/pages/index/index?utm_source=${utmSource}`,
-    imageUrl: url,
+    imageUrl: '',
   }
 }
 

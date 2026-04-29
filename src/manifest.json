@@ -69,7 +69,6 @@
       "componentFramework": "glass-easel",
       "scopedSlotsCompiler": "legacy",
       "styleIsolation" : "apply-shared",
-      "convertRpxToVw": true,
       "usingComponents" : true,
       "rendererOptions": {
         "skyline":  {
