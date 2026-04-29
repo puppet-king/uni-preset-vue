@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "Bash(claude plugin *)"
+      "Bash(claude plugin *)",
+      "Bash(npx prettier *)"
     ]
   }
 }

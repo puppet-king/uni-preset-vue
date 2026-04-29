@@ -8,7 +8,7 @@
     >
       <view class="flex absolute w-28 left-2 items-center z-50">
         <slot>
-          <ui-icon
+          <UiIcon
             v-if="showBack"
             icon="arrowLeft"
             :size="iconSize"
@@ -17,7 +17,7 @@
             @tap="onGoBack"
           />
 
-          <ui-icon
+          <UiIcon
             v-if="showHome"
             icon="home"
             :size="iconSize"
@@ -35,7 +35,6 @@
   </view>
 </template>
 <script>
-import config from '@/configs/app'
 import UiIcon from '@/components/UiIcon/UiIcon.vue'
 import { TabBarStyle } from '@/configs/constant'
 
@@ -81,8 +80,8 @@ export default {
   emits: [],
   data() {
     return {
-      statusBarHeight: wx.getWindowInfo().statusBarHeight,
-      systemTheme: wx.getAppBaseInfo().theme, // light、 dark
+      statusBarHeight: uni.getWindowInfo().statusBarHeight,
+      systemTheme: uni.getAppBaseInfo().theme, // light、 dark
       showBack: false,
       showHome: false,
       showClose: false,
@@ -103,7 +102,7 @@ export default {
   },
   created() {
     const res = wx.getMenuButtonBoundingClientRect()
-    const systemInfo = wx.getWindowInfo()
+    const systemInfo = uni.getWindowInfo()
     this.rightMargin = systemInfo.screenWidth - res.left + 10
 
     this.updateNavigationBar()

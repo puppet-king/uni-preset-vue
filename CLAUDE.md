@@ -6,27 +6,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Vue 3 + uni-app scaffold targeting **WeChat Mini Program** (Skyline renderer), with multi-platform support (H5, Alipay, Baidu, QQ, etc.). Uses Pinia for state, TailwindCSS (via weapp-tailwindcss), SCSS, and TypeScript.
 
-## Build, Dev & Test Commands
-
-```bash
-# WeChat dev (uses --mode test)
-npm run dev:mp-weixin
-
-# WeChat production build
-npm run build:mp-weixin
-
-# H5 dev
-npm run dev:h5
-
-# Type check
-npm run type-check
-
-# Postinstall hook — always runs after `npm install`
-npm run postinstall  # weapp-tw patch
-```
-
-**Target-specific scripts follow the pattern:** `dev:<platform>` / `build:<platform>` (e.g., `dev:mp-alipay`, `build:mp-baidu`).
-
 ## Code Style & Linting
 
 - **ESLint flat config** in `eslint.config.ts`
@@ -45,22 +24,16 @@ This project uses **weapp-tailwindcss**, which auto-converts standard utility cl
 - **Do not** write raw rpx in utility classes (e.g., avoid `text-[28rpx]`) — use built-in Tailwind classes like `text-xl` and let the plugin convert them
 - For custom design tokens, add them in `tailwind.config.ts` (theme extend) or define `@layer components` classes in `App.vue`
 - **Do not** use `<style lang="scss">` to write pixel values — prefer Tailwind utilities or `@apply` inside `@layer components`
-- Skyline disables `preflight` and `container` core plugins by default
-- `postinstall` runs `weapp-tw patch` — never skip this step after installing
 
-## WeChat Skyline Scroll-View Best Practices
+## WeChat Skyline UI Rules
 
-Use `type="list"` for performant list rendering:
-
-```vue
-<scroll-view class="h-screen" :scroll-y="true" type="list" cache-extent="500">
-  <!-- Must have multiple direct children — single child degrades performance -->
-  <view v-for="item in list" :key="item.id" class="p-4">...</view>
-</scroll-view>
-```
-
-- `cache-extent` recommended 300-500
-- `type="custom"` for complex layouts with sticky sections
+- Pages are **fullscreen and non-scrollable by default** — always use `<scroll-view>` for scrollable content
+- Use `flex-1` for scroll height, never fixed pixels
+- `<scroll-view>` for lists must use `type="list"` with multiple direct children and `cache-extent="300"`
+- For complex scroll layouts (sticky, grid, waterfall, nested, draggable-sheet, pull-to-refresh, snapshot) — invoke `/wechat-skyline` skill
+- For gesture interactions (tap, pan, drag, scale, sidebar swipe, gesture negotiation) — invoke `/wechat-skyline` skill
+- Page layout: wrap content in `<view class="page">` with `@apply flex flex-col h-screen w-screen`
+- `<span>` is the only inline element, used for text/Image inline mixing inside `<text>`
 
 ## Deprecated WeChat APIs — Do Not Use
 
@@ -110,6 +83,89 @@ Run `npm version patch|minor|major` to bump version. This triggers `scripts/vers
 2. Updates `export const VERSION = '...'` in `src/configs/constant.ts`
 3. `git add` and pushes to `master`
 
+## Component Organization
+
+All components use **PascalCase** naming.
+
+### Shared Components (主包通用组件)
+
+Reusable components used across multiple pages belong in `src/components/`. Each component gets its own directory with matching name:
+
+```
+src/components/
+  HeaderBar/
+    HeaderBar.vue
+  FooterNav/
+    FooterNav.vue
+```
+
+### Page-Specific Components (页面私有组件)
+
+Components only used by a single page live under that page's `components/` directory — flat structure (no subdirectory per component):
+
+```
+src/pages/index/
+  components/
+    BannerCard.vue
+    ProductGrid.vue
+```
+
+### Subpackages (分包)
+
+When splitting into subpackages, create `src/package-<name>/` with this default structure:
+
+```
+src/package-<name>/
+  components/    — shared components within this subpackage
+  utils/         — utility functions
+  static/        — static assets (images, fonts, etc.)
+  pages/         — pages belonging to this subpackage
+```
+
+Subpackage internal components follow the same rules as main package components (shared → `components/<Name>/<Name>.vue`, page-specific → `pages/<page>/components/<Name>.vue`).
+
+### Creating a Subpackage
+
+When creating a subpackage, two steps are required:
+
+**1. Create the directory structure** under `src/package-<name>/`.
+
+**2. Register in `src/pages.json`** — add entry to `subpackages` array:
+
+```json
+{
+  "subpackages": [
+    {
+      "root": "package-chat",
+      "name": "package-chat",
+      "pages": [
+        {
+          "path": "pages/chat/chat",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+**3. Optionally configure preload** via `preloadRule` for automatic subpackage preloading on navigation:
+
+```json
+{
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "wifi",
+      "packages": ["package-chat"]
+    }
+  }
+}
+```
+
+The `packages` array values must match the subpackage's `name` field.
+
 ## Uni-app Specifics
 
 - **Pages**: Single page at `src/pages/index/index` (custom navigation style)
@@ -119,7 +175,6 @@ Run `npm version patch|minor|major` to bump version. This triggers `scripts/vers
 - **Page lifecycle** — use `@dcloudio/uni-app` composables (`onLoad`, `onShow`, `onReady`, `onHide`, `onUnload`)
 - **Do not** use Vue 3 lifecycle hooks directly on pages — pages are not components in uni-app
 - **renderer**: Skyline with `glass-easel` framework (see `manifest.json` → `mp-weixin`)
-- **Skyline `scroll-view`**: Use `type="list"` for lists, ensure multiple direct children for performance
 - **WeChat worklet**: Used for animations (`wx.worklet.shared`, `wx.worklet.timing`, `Easing`)
 
 ## TypeScript

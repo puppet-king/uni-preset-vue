@@ -20,7 +20,7 @@ export default defineConfig({
         enable: true,
         base: './',
       },
-      logger: true,
+      logger: false,
     }),
     uvtw({
       rem2rpx: true,
