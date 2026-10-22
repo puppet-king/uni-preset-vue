@@ -1,7 +1,7 @@
-import { defineStore } from "pinia"
-import { ScopeType, ValidScopeKeys } from "@/typeings/authorization"
+import { defineStore } from 'pinia'
+import { ScopeType, ValidScopeKeys } from '@/typings/base'
 
-export const useAuthorizationStore = defineStore("authorization", () => {
+export const useAuthorizationStore = defineStore('authorization', () => {
   const scope: ScopeType = {
     userLocation: false, // 精确地理位置
     userFuzzyLocation: false, // 模糊地理位置

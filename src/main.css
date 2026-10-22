@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@custom-variant active {
+  &:active {
+    /* #ifndef MP */
+    /* #endif */
+  }
+}
+
+
+@theme {
+  /* ==================== 字体与字号 ==================== */
+  --font-ui: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "MiSans", "HarmonyOS Sans", "Microsoft YaHei", sans-serif;
+
+  --text-xxs: 18rpx;
+  --text-xxs--line-height: 1;
+
+  --text-tiny: 20rpx;
+  --text-tiny--line-height: 1.2;
+
+  --text-sub: 24rpx;
+  --text-sub--line-height: 1.4;
+
+  --text-base: 28rpx;
+  --text-base--line-height: 1.5;
+
+  --text-chat: 30rpx;
+  --text-chat--line-height: 1.6;
+
+  --text-title: 32rpx;
+  --text-title--line-height: 1.4;
+  --text-title--font-weight: 600;
+
+  /* ==================== 调色板 (深邃商务科技蓝体系) ==================== */
+  /* 主色：核心 CTA 主按钮、高亮选中态、开关打开态 (深邃沉稳蓝，告别荧光刺眼) */
+  --color-primary: #1D4ED8;
+
+  /* 次主色：辅助蓝、微交互高光 */
+  --color-secondary: #2563EB;
+
+  /* 点缀浅色：浅蓝底板、Tag 标签背景、选中卡片高亮 */
+  --color-accent: #EFF6FF;
+
+  /* 深色调：主视觉卡片深色渐变终点、深色模式关键强调 */
+  --color-dark: #1E3A8A;
+
+  /* 背景浅底色：中性优雅灰底色，与纯白卡片形成鲜明对比，层次更分明 */
+  --color-light: #F0F2F6;
+
+  /* 正文深色：一级主标题、正文段落文字 (高级炭黑) */
+  --color-black: #16181D;
+
+  /* ==================== 阴影与间距 ==================== */
+  --shadow-card: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+  --spacing-safe-bottom: env(safe-area-inset-bottom);
+
+  /* ==================== 动画注册 (自动生成 animate-* 工具类) ==================== */
+  --animate-slide-up: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-shimmer: shimmer 2s infinite;
+  --animate-pulse-glow: pulse-glow 2s infinite;
+  --animate-spin: spin 1s linear infinite;
+  --animate-scan: scan 2.5s ease-in-out infinite;
+}
+
+/* ==================== Keyframes 关键帧 ==================== */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(13, 155, 114, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(13, 155, 114, 0.45);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-20rpx);
+  }
+  50% {
+    transform: translateY(500rpx);
+  }
+  100% {
+    transform: translateY(-20rpx);
+  }
+}
+
+/* ==================== 自定义 Utility ==================== */
+@utility container {
+  @apply flex flex-col h-screen w-screen bg-light text-base relative font-ui ;
+}
+
+
+/* 编译源码路径规则 */
+@source "../src/**/*.{html,js,ts,jsx,tsx,vue}";
+@source "./**/*.{html,js,ts,jsx,tsx,vue}";
+@source "..";
+@source not "../uni_modules";
+@source not "./uni_modules";
+@source not "../node_modules";
+@source not "../dist";
+@source not "../unpackage";

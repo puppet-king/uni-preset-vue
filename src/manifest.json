@@ -50,18 +50,21 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-      "appid" : "wxef6d0e433dcf79c7",
-      "libVersion": "3.6.6",
+      "projectname": "xxx-client",
+      "appid" : "",
+      "libVersion": "3.11.3",
       "setting" : {
         // https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html#%E4%B8%80%E7%BA%A7%E5%AD%97%E6%AE%B5
         "urlCheck" : false,
         "checkSiteMap": true,
+        "enhance": true,
         "es6" : true,
         "minified": true, // 上传代码时是否自动压缩脚本文件
-        "uglifyFileName": false, // 上传时进行代码保护
+        "uglifyFileName": true, // 上传时进行代码保护
         "ignoreUploadUnusedFiles": true, // 上传时是否过滤无依赖文件
         "minifyWXML": true, // 上传代码时是否自动压缩样式文件
         "minifyWXSS": true,
+        "compileWorklet": true,
         "bigPackageSizeSupport": true,
         "skylineRenderEnable": true
       },
@@ -69,7 +72,6 @@
       "componentFramework": "glass-easel",
       "scopedSlotsCompiler": "legacy",
       "styleIsolation" : "apply-shared",
-      "convertRpxToVw": true,
       "usingComponents" : true,
       "rendererOptions": {
         "skyline":  {
@@ -86,8 +88,9 @@
       "uniStatistics" : {
         "enable" : false
       },
-      "darkmode" : true,
-      "themeLocation" : "theme.json" // 如果 theme.json 在根目录可省略
+      "darkmode" : false,
+      "themeLocation" : "theme.json", // 如果 theme.json 在根目录可省略
+      "nativeTags": ["span"]
     },
     "mp-alipay" : {
         "usingComponents" : true

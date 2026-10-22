@@ -1,78 +1,51 @@
-import { defineStore } from "pinia"
-import { ref } from "vue"
-import { getUserData } from "@/api/user"
-import { AuthData } from "@/typeings/base"
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { getUserProfile, UserProfileResponseData } from '@/api/user'
 
-export const useUserStore = defineStore("user", () => {
-  const uuid = ref("")
-  const nick = ref("")
+export const useUserStore = defineStore('user', () => {
+  // 用户数据是否已加载
   const isLoad = ref(false)
 
-  const auth = ref<AuthData>({
-    token: "",
-    expires_in: 0,
-    refresh_token: "",
-    refresh_token_expires_in: 0
-  })
-
-
-  // 异步设置 AccessToken 和 RefreshToken
-  function setAuth(data: AuthData): void {
-    if (data.refresh_token) {
-      auth.value = data
-    } else {
-      auth.value.token = data.token
-      auth.value.expires_in = data.expires_in
-    }
-
-    console.log("setAuth Success ")
+  // 用户信息
+  const defaultUserInfo: UserProfileResponseData = {
+    uuid: '',
+    avatar: '',
+    nickname: '访客用户',
+    birthday: '',
+    gender: 0,
+    createdAt: '',
   }
 
-  function checkTokenExpiresIn(): [string, boolean] {
-    const currentTime = Math.floor(Date.now() / 1000)
-    if (auth.value.expires_in > currentTime) {
-      return [auth.value.token, true]
-    }
-    return ["", false]
-  }
+  const userInfo = ref<UserProfileResponseData>({ ...defaultUserInfo })
 
-  function checkRefreshTokenExpiresIn(): [string, boolean] {
-    const currentTime = Math.floor(Date.now() / 1000)
-    console.log("checkRefreshTokenExpiresIn", auth.value.refresh_token_expires_in)
-    if (auth.value.refresh_token_expires_in > currentTime) {
-      return [auth.value.refresh_token, true]
+  // ==================== Actions ====================
+  /** 获取并设置用户数据 (真实请求 GET /v1/user/profile 接口) */
+  async function setUserData(force = false): Promise<boolean> {
+    // 已加载且非强制刷新，直接返回
+    if (isLoad.value && !force) {
+      return true
     }
-    return ["", false]
-  }
 
-  async function setUserData(force = false) {
     try {
-      if (isLoad.value && !force) {
+      const res = await getUserProfile()
+      if (res.code === 200 && res.data) {
+        userInfo.value = res.data
+        isLoad.value = true
         return true
       }
-
-      const res = await getUserData()
-      const { code } = res
-      if (code !== 200) {
-        return false
-      }
-
-      uuid.value = res.data.uuid
-      nick.value = res.data.nick
-
-      isLoad.value = true
-
-      // console.log('加载成功', uuid.value)
-      return true
+      return false
     } catch (err) {
-      console.error(err)
+      console.error('获取用户资料失败:', err)
       return false
     }
   }
 
   return {
-    uuid, nick, isLoad,
-    setUserData, setAuth,
-    checkTokenExpiresIn, checkRefreshTokenExpiresIn
+    // State
+    isLoad,
+    userInfo,
+
+    // Actions
+    setUserData,
   }
 })

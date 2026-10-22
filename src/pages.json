@@ -13,13 +13,12 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app",
         "navigationStyle": "custom"
 			}
 		}
 	],
 	"globalStyle": {
-    "restartStrategy": "homePageAndLatestPage",
+    "restartStrategy": "homePageAndLatestPage", // homePage 主页  homePageAndLatestPage 上一次的页面
     "backgroundColor": "@backgroundColor"
   },
   //  "tabBar": {

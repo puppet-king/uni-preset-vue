@@ -22,27 +22,21 @@ src/
 ├── pages/        # 页面组件
 ├── stores/       # Pinia 状态管理
 ├── style/        # 样式文件
-├── typeings/     # 类型定义
+├── typings/      # 类型定义
 └── utils/        # 工具类
 ```
 
 ## 安装依赖
 
 ```bash
-npm install
+pnpm install
 ```
 
 ## 开发命令
 
 ```bash
-# 启动 H5 开发服务器
-npm run dev:h5
-
 # 启动微信小程序开发服务器
-npm run dev:mp-weixin
-
-# 构建 H5
-npm run build:h5
+pnpm run dev:mp-weixin
 
 # 构建微信小程序
 npm run build:mp-weixin
@@ -50,17 +44,17 @@ npm run build:mp-weixin
 
 ## 版本管理
 
-建议使用 npm version 命令来管理版本更新：
+建议使用 pnpm version 命令来管理版本更新：
 
 ```bash
 # 更新补丁版本号 (x.y.z -> x.y.(z+1))
-npm version patch
+pnpm version patch
 
 # 更新小版本号 (x.y.z -> x.(y+1).0)
-npm version minor
+pnpm version minor
 
 # 更新大版本号 (x.y.z -> (x+1).0.0)
-npm version major
+pnpm version major
 ```
 
 ## 功能特性
