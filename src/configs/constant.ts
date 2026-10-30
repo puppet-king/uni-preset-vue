@@ -9,8 +9,6 @@ export const EXPIRE = 86400
 /** 静态音频/媒体资源 CDN 根域名 */
 export const STATIC_BASE_URL = ''
 
-
-
 // 用户登录凭证 Storage Key 常量定义 (统一下划线命名与语义规范)
 export const AUTH_STORAGE_KEYS = {
   UUID: 'user_uuid',
