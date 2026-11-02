@@ -31,6 +31,6 @@ export interface ItemClickPayload {
   pagePath: string
 }
 
-type FuiTabBar = {
+export type FuiTabBar = {
   getTabBarHeight: () => Promise<number>
 }
