@@ -1,4 +1,4 @@
-export const VERSION = '0.0.0'
+export const VERSION = '0.0.4'
 
 /** 后端接口基础请求地址 (由环境变量注入) */
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
