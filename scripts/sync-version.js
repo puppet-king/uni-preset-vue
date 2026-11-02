@@ -3,29 +3,23 @@ const fs = require('fs')
 const path = require('path')
 
 // 1. 获取 package.json 中的最新版本号
-// npm version 执行时，该文件版本已经先被更新了
-const newVersion = process.env.npm_package_version
+// pnpm/npm version 执行时，该文件版本已经先被更新了
+const pkgPath = path.join(process.cwd(), 'package.json')
+const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
+const newVersion = pkg.version || process.env.npm_package_version
 console.log('newVersion', newVersion)
 
 /**
  * 标准版本更新 (SemVer)
- * npm version patch  1.0.0 → 1.0.1  Bug 修复
- * npm version minor  1.0.0 → 1.1.0  新增向下兼容的功能
- * npm version major  1.0.0 → 2.0.0  不兼容的重大变更
+ * pnpm version patch  1.0.0 → 1.0.1  Bug 修复
+ * pnpm version minor  1.0.0 → 1.1.0  新增向下兼容的功能
+ * pnpm version major  1.0.0 → 2.0.0  不兼容的重大变更
  *
- * 预发布版本 (Pre-release)
- * npm version prepatch 1.0.0 → 1.0.1-0
- * npm version preminor 1.0.0 → 1.1.0-0
- * npm version premajor 1.0.0 → 2.0.0-0
- * npm version prerelease 1.0.1-0 → 1.0.1-1
- * 自定义标识符：
- * npm version prerelease --preid=alpha → 1.0.1-alpha.0
- *
- * npm version from-git
+ * pnpm version from-git
  * 手动在 Git 里打了 Tag 但忘记改 package.json 时，运行此命令会让 package.json 的版本号强制跟随最新的 Git Tag。
  *
  * 直接指定版本号
- * npm version 2.1.5-beta.3
+ * pnpm version 2.1.5-beta.3
  */
 
 if (!newVersion) {
